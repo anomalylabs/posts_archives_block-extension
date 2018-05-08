@@ -1,0 +1,11 @@
+{{ asset_add('styles.css', 'anomaly.extension.posts_archives_block::scss/block.scss') }}
+
+<ul>
+    {% for archive in entries('posts').archives().orderBy('year', 'DESC').get() %}
+        <li>
+            <a href="{{ url_route('anomaly.module.posts::posts.archive', {'year': archive.year}) }}" target="{{ link.target.key }}">
+                {{ archive.year }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
