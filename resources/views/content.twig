@@ -1,11 +1,21 @@
 {{ asset_add('styles.css', 'anomaly.extension.posts_archives_block::scss/block.scss') }}
 
 <ul>
-    {% for archive in entries('posts').archives().orderBy('year', 'DESC').get() %}
+    {% for year, archives in entries('posts').archives().orderBy('year', 'DESC').orderBy('month', 'DESC').get().groupBy('year') %}
         <li>
-            <a href="{{ url_route('anomaly.module.posts::posts.archive', {'year': archive.year}) }}" target="{{ link.target.key }}">
-                {{ archive.year }}
+            <a href="{{ url_route('anomaly.module.posts::posts.archive', {'year': year}) }}">
+                {{ year }}
             </a>
+
+            {#<ul>#}
+                {#{% for archive in archives %}#}
+                    {#<li>#}
+                        {#<a href="{{ url_route('anomaly.module.posts::posts.archive', {'year': year, 'month': archive.month}) }}">#}
+                            {#{{ carbon().createFromFormat('!m', archive.month).format('F') }}#}
+                        {#</a>#}
+                    {#</li>#}
+                {#{% endfor %}#}
+            {#</ul>#}
         </li>
     {% endfor %}
 </ul>
